@@ -40,17 +40,16 @@ describe '#touch_out' do
   before :each do
     subject.top_up(5)
     subject.touch_in(station)
-    subject.touch_out(station)
+
   end
 
-
-
-
   it 'can touch out' do
+    subject.touch_out(station)
     expect(subject.in_journey).to be false
   end
 
   it 'stores the exit station' do
+    subject.touch_out(station)
     expect(subject.exit_station).to eq station
   end
 
@@ -76,9 +75,10 @@ end
     end
   end
 
-    it 'has a penalty fare' do
-      subject.
-      expect(journey.calculate_fare).to eq Journey::PENALTY_FARE
+    it 'should charge penalty fare if you try to touch in twice in a-row' do
+      subject.top_up(10)
+      subject.touch_in(entry_station)
+      expect{subject.touch_in(Station.new)}.to change{subject.balance}.by (-Oystercard::PENALTY_FARE)
     end
 
 end

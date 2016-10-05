@@ -3,7 +3,6 @@ require 'oystercard'
 class Journey
 
   MINIMUM_FARE = 1
-  PENALTY_FARE = 6
 
   def initialize(entry_station)
     @in_journey =  true
