@@ -1,5 +1,3 @@
-require 'oystercard'
-
 class Journey
 
   MINIMUM_FARE = 1
@@ -21,9 +19,8 @@ class Journey
   def calculate_fare
     MINIMUM_FARE
   end
-  private
 
   def journey
-    {entry_station: entry_station, exit_station: exit_station}
+    {entry_station: @entry_station, exit_station: @exit_station}
   end
 end

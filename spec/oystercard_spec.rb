@@ -7,22 +7,7 @@ describe Oystercard do
     let(:exit_station)  {double :exit_station}
     let(:journey) {double :journey}
 
-  it 'should check if there are empty lists of journeys' do
-    expect(subject.journeys).to match_array([])
-  end
-
-  it 'is not in a journey' do
-    expect(subject).not_to be_in_journey
-  end
-
 describe '#touch_in' do
-
-
-  it 'records the entry station' do
-    subject.top_up(1)
-    subject.touch_in(station)
-    expect(subject.entry_station).to eq station
-  end
 
   let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
 
@@ -40,17 +25,6 @@ describe '#touch_out' do
   before :each do
     subject.top_up(5)
     subject.touch_in(station)
-
-  end
-
-  it 'can touch out' do
-    subject.touch_out(station)
-    expect(subject.in_journey).to be false
-  end
-
-  it 'stores the exit station' do
-    subject.touch_out(station)
-    expect(subject.exit_station).to eq station
   end
 
   it 'deducts the correct money after the journey' do
