@@ -49,10 +49,15 @@ end
     end
   end
 
-    it 'should charge penalty fare if you try to touch in twice in a-row' do
+    it 'should charge penalty fare if you try to touch-in twice in a-row' do
       subject.top_up(10)
       subject.touch_in(entry_station)
       expect{subject.touch_in(Station.new)}.to change{subject.balance}.by (-Oystercard::PENALTY_FARE)
+    end
+
+    it 'should charge penalty fare if you try to touch-out twice in a-row' do
+      subject.top_up(10)
+      expect{subject.touch_out(Station.new)}.to change{subject.balance}.by (-Oystercard::PENALTY_FARE)
     end
 
 end

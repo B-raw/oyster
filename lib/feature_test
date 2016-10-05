@@ -1,0 +1,7 @@
+require './lib/oystercard'
+oyster = Oystercard.new
+oyster.top_up(20)
+require './lib/station'
+waterloo = Station.new(name: waterloo, zone: 2)
+borough = Station.new(name:"borough", zone:2)
+require './lib/journey'

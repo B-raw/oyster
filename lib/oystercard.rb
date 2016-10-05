@@ -18,13 +18,17 @@ attr_reader :balance, :journeys
 
   def touch_in(station)
     fail 'Insufficient funds for jouney' if @balance < MINIMUM_BALANCE
-    charge_penalty_fare if @current_journey #if a current journey still exists, need to charge penalty fare...
+    charge_penalty_fare if double_touch_in #if a current journey still exists, need to charge penalty fare...
     new_journey(station)
   end
 
   def touch_out(station)
-    deduct(MINIMUM_BALANCE)
-    end_journey(station)
+    if double_touch_out
+      charge_penalty_fare
+    else
+      deduct(MINIMUM_BALANCE)
+      end_journey(station)
+    end
   end
 
 private
@@ -45,8 +49,17 @@ private
 
   def charge_penalty_fare
     @balance -= PENALTY_FARE
-    @journeys << @current_journey.journey
+    @journeys << @current_journey.journey if @current_journey
+    @journeys << {error: "Double touch_out", exit_station: station} if !@current_journey
     "You have been charged £#{PENALTY_FARE} for not touching-out of last station"
+  end
+
+  def double_touch_out
+    !@current_journey
+  end
+
+  def double_touch_in
+    !!@current_journey
   end
 
 
